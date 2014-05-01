@@ -10,6 +10,8 @@ trait SolrCodecJson {
   implicit def QueryResponseCodec = casecodec2(QueryResponse.apply, QueryResponse.unapply)("numFound", "docs")
   implicit def HttpResponseCodec = casecodec1(HttpResponse.apply, HttpResponse.unapply)("response")
 
-  def decodeJSON(s: String) = s.decodeValidation[HttpResponse]
+  def decode(s: String) = s.decodeValidation[HttpResponse]
+  def encode(o: Doc): Json = o.asJson
+  def encodeToString(o: Doc): String = encode(o).spaces2
 
 }
